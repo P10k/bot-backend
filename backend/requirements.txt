@@ -1,9 +1,7 @@
 fastapi
 uvicorn
 python-dotenv
-google-generativeai
-sentence-transformers
+google-genai
 faiss-cpu
 numpy
-langdetect
 python-multipart

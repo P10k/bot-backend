@@ -1,9 +1,9 @@
-import google.generativeai as genai
+from google import genai
 import os
 
 from dotenv import load_dotenv
 from app.services.conversation_memory import get_history
-from app.utils.language_detector import detect_language
+
 
 load_dotenv()
 

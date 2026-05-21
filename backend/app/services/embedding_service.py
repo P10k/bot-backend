@@ -1,11 +1,15 @@
-from sentence_transformers import SentenceTransformer
+from google import genai
 
-model = SentenceTransformer(
-    "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
-)
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
 
 def generate_embedding(text):
-    embedding = model.encode(text)
 
-    return embedding
+    response = client.models.embed_content(model="text-embedding-004", contents=text)
+
+    return response.embeddings[0].values
