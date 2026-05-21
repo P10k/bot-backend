@@ -2,14 +2,11 @@ from google import genai
 import os
 
 from dotenv import load_dotenv
-from app.services.conversation_memory import get_history
-
 
 load_dotenv()
 
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
-model = genai.GenerativeModel("gemini-2.5-flash")
+client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
 
 def ask_llm(user_query, context, history):
@@ -18,14 +15,8 @@ def ask_llm(user_query, context, history):
 
     for msg in history:
         history_text += f"""
-            {msg["role"]}: {msg["content"]}
-            """
-
-    # language = detect_language(user_query)
-
-    # language_map = {"en": "English", "kn": "Kannada", "hi": "Hindi", "mr": "Marathi"}
-
-    # reply_language = language_map.get(language, "English")
+{msg["role"]}: {msg["content"]}
+"""
 
     prompt = f"""
 You are a multilingual AI admission assistant for an institution.
@@ -45,13 +36,12 @@ IMPORTANT RULES:
 - ONLY answer from institution data
 - Keep answers short and natural
 - Remember previous conversation context
-- Remember conversation context
 - If information is unavailable, politely say it is unavailable
 
 User Question:
 {user_query}
 """
 
-    response = model.generate_content(prompt)
+    response = client.models.generate_content(model="gemini-2.5-flash", contents=prompt)
 
     return response.text
