@@ -1,0 +1,65 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual Environment
+.venv/
+venv/
+
+# Environment Variables
+.env
+
+# FastAPI / Logs
+*.log
+
+# FAISS files
+*.index
+*.faiss
+
+# Model cache
+.cache/
+huggingface/
+
+# VS Code
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Node Modules
+node_modules/
+
+# Vite
+dist/
+
+# Build files
+build/
+
+# Coverage
+coverage/
+
+# npm logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Render
+.render/
+
+# Temporary files
+temp/
+tmp/
+
+# Audio files
+*.wav
+*.mp3
+
+# Database
+*.db
+*.sqlite3
+
+# VS Code workspace
+*.code-workspace
