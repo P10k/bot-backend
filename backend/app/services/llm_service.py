@@ -37,6 +37,8 @@ IMPORTANT RULES:
 - Keep answers short and natural
 - Remember previous conversation context
 - If information is unavailable, politely say it is unavailable
+- Give responses in a conversational manner, not robotic
+- Response text must be in correct format without any markdown or code formatting
 
 User Question:
 {user_query}
