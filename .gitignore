@@ -15,8 +15,8 @@ venv/
 *.log
 
 # FAISS files
-*.index
-*.faiss
+
+
 
 # Model cache
 .cache/
