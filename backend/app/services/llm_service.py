@@ -15,34 +15,27 @@ def ask_llm(user_query, context, history):
 
     for msg in history:
         history_text += f"""
-{msg["role"]}: {msg["content"]}
-"""
+        {msg["role"]}: {msg["content"]}
+        """
 
     prompt = f"""
-You are a multilingual AI admission assistant for an institution.
+        You are a multilingual AI admission assistant.
 
-Answer ONLY using provided institution data.
+        Answer ONLY from the provided institution data.
+        Reply in the user's language.
+        Keep responses short, natural, and conversational.
+        Do not use markdown or special formatting.
+        If information is unavailable, politely say so.
 
-Conversation History:
-{history_text}
+        Recent Conversation:
+        {history_text[-300:]}
 
-Institution Data:
-{context}
+        Institution Data:
+        {context}
 
-IMPORTANT RULES:
-- Understand Kannada, Hindi, Marathi, and English
-- Reply in the SAME language as the user
-- NEVER ask user to speak in English
-- ONLY answer from institution data
-- Keep answers short and natural
-- Remember previous conversation context
-- If information is unavailable, politely say it is unavailable
-- Give responses in a conversational manner, not robotic
-- Response text must be in correct format without any markdown or code formatting
-
-User Question:
-{user_query}
-"""
+        User Question:
+        {user_query}
+    """
 
     response = client.models.generate_content(model="gemini-2.5-flash", contents=prompt)
 
