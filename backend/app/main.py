@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.routes.chat import router as chat_router
+from app.routes.admin import router as admin_router
 
 
 app = FastAPI(title="AI Admission Assistant API")
@@ -19,6 +20,8 @@ app.add_middleware(
 
 # Routes
 app.include_router(chat_router)
+
+app.include_router(admin_router)
 
 
 # Root Route
