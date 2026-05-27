@@ -1,33 +1,17 @@
 import faiss
 import numpy as np
-import json
 import os
 
 from app.services.embedding_service import generate_embedding
+from app.services.db_service import get_course_documents
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-DATA_PATH = os.path.join(BASE_DIR, "data", "courses.json")
-
 INDEX_PATH = os.path.join(BASE_DIR, "data", "faiss_index.index")
 
 
-with open(DATA_PATH, "r", encoding="utf-8") as f:
-    courses = json.load(f)
-
-
-documents = []
-
-for course in courses:
-    text = f"""
-Course: {course["course"]}
-Duration: {course["duration"]}
-Fees: {course["fees"]}
-Campus: {course["campus"]}
-"""
-
-    documents.append(text)
+documents = get_course_documents()
 
 
 print("Generating embeddings...")
@@ -44,4 +28,4 @@ index.add(embeddings)
 
 faiss.write_index(index, INDEX_PATH)
 
-print("FAISS index created successfully.")
+print("FAISS index updated successfully.")
