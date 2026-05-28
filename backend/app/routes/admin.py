@@ -1,7 +1,5 @@
 from fastapi import APIRouter
 
-from app.services.index_service import rebuild_index
-
 from pydantic import BaseModel
 
 from app.services.db_service import get_courses, supabase
@@ -16,7 +14,6 @@ class CourseRequest(BaseModel):
 
 
 router = APIRouter(prefix="/admin", tags=["Admin"])
-
 
 
 @router.get("/courses")
