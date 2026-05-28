@@ -1,19 +1,28 @@
-import numpy as np
-
 from app.services.embedding_service import generate_embedding
-from app.services.vector_store import index
-from app.services.data_loader import documents
+from app.services.db_service import supabase
 
 
-def retrieve_context(query, top_k=4):
+def retrieve_context(query):
 
-    query_embedding = np.array([generate_embedding(query)]).astype("float32")
+    query_embedding = generate_embedding(query)
 
-    distances, indices = index.search(query_embedding, top_k)
+    embedding_str = "[" + ",".join(map(str, query_embedding)) + "]"
 
-    results = []
+    response = supabase.rpc(
+        "match_courses", {"query_embedding": embedding_str, "match_count": 2}
+    ).execute()
 
-    for idx in indices[0]:
-        results.append(documents[idx])
+    results = response.data
 
-    return "\n".join(results)
+    context = ""
+
+    for item in results:
+        context += f"""
+        Course: {item["course"]}
+        Duration: {item["duration"]}
+        Fees: {item["fees"]}
+        Campus: {item["campus"]}
+
+        """
+
+    return context
