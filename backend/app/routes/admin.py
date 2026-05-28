@@ -5,6 +5,7 @@ from app.services.index_service import rebuild_index
 from pydantic import BaseModel
 
 from app.services.db_service import get_courses, supabase
+from app.services.embedding_service import generate_embedding
 
 
 class CourseRequest(BaseModel):
@@ -32,6 +33,17 @@ def fetch_courses():
 @router.post("/courses")
 def create_course(course: CourseRequest):
 
+    text = f"""
+        Course: {course.course}
+        Duration: {course.duration}
+        Fees: {course.fees}
+        Campus: {course.campus}
+        """
+
+    embedding = generate_embedding(text)
+
+    embedding_str = "[" + ",".join(map(str, embedding)) + "]"
+
     response = (
         supabase.table("courses")
         .insert(
@@ -40,6 +52,7 @@ def create_course(course: CourseRequest):
                 "duration": course.duration,
                 "fees": course.fees,
                 "campus": course.campus,
+                "embedding": embedding_str,
             }
         )
         .execute()
