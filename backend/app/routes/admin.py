@@ -18,11 +18,6 @@ class CourseRequest(BaseModel):
 router = APIRouter(prefix="/admin", tags=["Admin"])
 
 
-@router.post("/rebuild-index")
-def rebuild_faiss_index():
-
-    return rebuild_index()
-
 
 @router.get("/courses")
 def fetch_courses():
